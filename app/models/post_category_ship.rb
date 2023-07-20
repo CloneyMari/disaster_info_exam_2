@@ -1,0 +1,2 @@
+class PostCategoryShip < ApplicationRecord
+end
