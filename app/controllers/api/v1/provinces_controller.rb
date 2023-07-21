@@ -13,6 +13,6 @@ class Api::V1::ProvincesController < ApplicationController
 
   def show
     province = Address::Province.find_by_id(params[:id])
-    render json: province
+    render json: province, serializer: ProvinceSerializer
   end
 end
