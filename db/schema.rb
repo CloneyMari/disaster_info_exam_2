@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_183159) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_074213) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -51,6 +51,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_183159) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "comments", charset: "utf8mb4", force: :cascade do |t|
+    t.string "content"
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
   create_table "post_category_ships", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "post_id"
     t.bigint "category_id"
@@ -66,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_183159) do
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "address_region_id"
+    t.bigint "address_province_id"
+    t.bigint "address_city_id"
+    t.bigint "address_barangay_id"
+    t.index ["address_barangay_id"], name: "index_posts_on_address_barangay_id"
+    t.index ["address_city_id"], name: "index_posts_on_address_city_id"
+    t.index ["address_province_id"], name: "index_posts_on_address_province_id"
+    t.index ["address_region_id"], name: "index_posts_on_address_region_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
@@ -80,4 +96,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_183159) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "posts"
 end
