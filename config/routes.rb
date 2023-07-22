@@ -4,12 +4,17 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root 'welcome#index'
+  root 'posts#index'
 
   resources :posts do
     resources :comments, except: :show
   end
   resources :categories, except: :show
+
+  namespace :user do
+    resources :posts, except: [:create, :new]
+    resources :comments, except: [:create, :new]
+  end
 
   namespace :api do
    namespace :v1 do
