@@ -3,7 +3,7 @@ before_action :authenticate_user!, except: [:index, :show]
 before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.includes(:categories, :user, :region, :province)
+    @posts = Post.includes(:categories, :user).page(params[:page]).per(5)
   end
 
   def new
