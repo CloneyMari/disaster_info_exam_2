@@ -1,0 +1,9 @@
+<h1>show post id: <%= @post.id %></h1>
+<ul>
+  <li><%= @post.title %></li>
+  <li><%= @post.content %></li>
+  <li><%= @post.address %></li>
+  <li><%= @post.user&.email %></li>
+</ul>
+
+<%= link_to 'Index', posts_path %>
