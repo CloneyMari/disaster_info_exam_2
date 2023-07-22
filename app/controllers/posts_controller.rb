@@ -3,7 +3,7 @@ before_action :authenticate_user!, except: [:index, :show]
 before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.includes(:categories, :user).all
+    @posts = Post.includes(:categories, :user, :region, :province)
   end
 
   def new
@@ -57,6 +57,6 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :address, category_ids: [])
+    params.require(:post).permit(:title, :content, :image, :address, :address_region_id, :address_province_id, :address_city_id, :address_barangay_id, category_ids: [])
   end
 end

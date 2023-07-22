@@ -1,5 +1,22 @@
 <%= form_with model: category, url: path, data: { turbo: false } do |form| %>
   <%= form.label :name %>
   <%= form.text_field :name %>
+
+  <div>
+     <%= form.label :address %>
+     <%= form.text_field :address %>
+   </div>
+   <div>
+     <%= form.label :address_region_id %>
+     <%= form.collection_select :address_region_id,
+                                Address::Region.all, :id, :name,
+                                { prompt: 'Please select region' } %>
+   </div>
+   <div>
+     <%= form.label :address_provinces_id %>
+     <%= form.collection_select :address_provinces_id,
+                                Address::Province.all, :id, :name,
+                                { prompt: 'Please select province' } %>
+   </div>
   <%= form.submit %>
 <% end %>
