@@ -12,7 +12,4 @@ class Post < ApplicationRecord
   has_many :categories, through: :post_category_ships
   belongs_to :user
 
-  def destroy
-    update(deleted_at: Time.now)
-  end
 end
