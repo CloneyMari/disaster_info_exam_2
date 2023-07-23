@@ -13,6 +13,11 @@ before_action :set_post, only: [:show, :edit, :update, :destroy]
   def create
    @post = Post.new(post_params)
    @post.user = current_user
+   if Rails.env.development?
+      @post.ip_address = Net::HTTP.get(URI.parse('http://checkip.amazonaws.com/')).squish
+    else
+      @post.ip_address = request.remote_ip
+    end
     if @post.save
       flash[:notice] = 'Post created successfully'
       redirect_to posts_path

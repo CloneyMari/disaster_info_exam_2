@@ -1,34 +1,38 @@
 <h1>Post List</h1>
+  <%= link_to 'Export', posts_path(format: :csv, page: params[:page]), class:'btn btn-secondary' %>
 
- <table>
+ <table class="table table-hover">
    <thead>
-     <td>title</td>
-     <td>content</td>
-     <td>address</td>
-     <td>category</td>
-     <td>user</td>
-     <td>action</td>
+     <td>Title</td>
+     <td>Content</td>
+     <td>Category</td>
+     <td>Address</td>
+     <td>User</td>
+     <td>City</td>
+     <td>Country</td>
+     <td>Action</td>
 
    </thead>
    <% @posts.each do |post| %>
      <tr>
        <td><%= post.title %></td>
        <td><%= post.content %></td>
-       <td><%= post.address %></td>
-       <td><%= "#{post.region&.name} #{post.province&.name} #{post.city&.name} #{post.barangay&.name} #{post.address}" %></td>
        <td><%= post.categories.pluck(:name).join(',') %></td>
+       <td><%= "#{post.region&.name} #{post.province&.name} #{post.city&.name} #{post.barangay&.name} #{post.address}" %></td>
        <td><%= post.user&.email %></td>
+       <td><%= Geocoder.search(post.ip_address).first&.city %></td>
+       <td><%= Geocoder.search(post.ip_address).first&.country %></td>
    <td>
-    <%= link_to 'Show', post_path(post) %>
-    <%= link_to 'Edit', edit_post_path(post) if policy(post).edit? %>
-    <%= button_to 'Delete', post_path(post), method: :delete if policy(post).destroy? %>
-    <%= link_to 'Comments', post_comments_path(post) %>
-    <%= link_to 'New Comment', new_post_comment_path(post) %>
+    <%= link_to 'Show', post_path(post), class:'btn btn-primary' %>
+    <%= link_to 'Edit', edit_post_path(post), class:'btn btn-warning' if policy(post).edit? %>
+    <%= button_to 'Delete', post_path(post), method: :delete,  class:'btn btn-danger' if policy(post).destroy? %>
+    <%= link_to 'Comments', post_comments_path(post),  class:'btn btn-info' %>
+    <%= link_to 'New Comment', new_post_comment_path(post),  class:'btn btn-success' %>
     </td>
      </tr>
    <% end %>
  </table>
 
  <%= paginate @posts %>
- <%= link_to 'New', new_post_path %>
- <%= link_to 'Category', new_category_path %>
+ <%= link_to 'New', new_post_path, class:'btn btn-success' %>
+ <%= link_to 'Category', categories_path, class:'btn btn-info' %>

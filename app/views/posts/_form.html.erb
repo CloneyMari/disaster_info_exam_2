@@ -19,11 +19,6 @@
   </div>
 
   <div>
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
-
-  <div>
     <%= form.collection_check_boxes :category_ids, Category.all, :id, :name %>
   </div>
 
