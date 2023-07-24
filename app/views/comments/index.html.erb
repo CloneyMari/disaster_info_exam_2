@@ -8,6 +8,8 @@
     <%= comment.content %>(<%= comment.created_at %>) by <%= comment.user&.email %> 
     <%= link_to 'Edit', edit_post_comment_path(@post, comment) if policy(comment).edit? %>
     <%= button_to 'Delete', post_comment_path(@post, comment), method: :delete if policy(comment).destroy? %>
+    <td><%= Geocoder.search(comment.ip_address).first&.city %></td>
+    <td><%= Geocoder.search(comment.ip_address).first&.country %></td>
  </li>
 <% end %>
 </ul>
