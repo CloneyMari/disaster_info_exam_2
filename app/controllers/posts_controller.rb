@@ -1,9 +1,42 @@
 class PostsController < ApplicationController
 before_action :authenticate_user!, except: [:index, :show]
 before_action :set_post, only: [:show, :edit, :update, :destroy]
+require 'csv'
 
   def index
     @posts = Post.includes(:categories, :user).page(params[:page]).per(5)
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [
+           'code', 'name', 'region_code', 'province_code', 'city_code'
+          ]
+          
+          Address::Region.all.each do |region|
+            csv << [
+             region.code, region.name
+            ]
+          end
+          Address::Province.includes(:region).all.each do |province|
+            csv << [
+             province.code, province.name, province.region.code
+            ]
+          end
+          Address::City.includes(:province).all.each do |city|
+            csv << [
+             city.code, city.name, nil, city.province.code
+            ]
+          end
+          Address::Barangay.includes(:city).all.each do |barangay|
+            csv << [
+             barangay.code, barangay.name, nil, nil, barangay.city.code
+            ]
+          end
+        end
+        render plain: csv_string
+      }
+    end
   end
 
   def new
