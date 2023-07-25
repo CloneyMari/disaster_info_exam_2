@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  before_create :generate_short_url
   validates :title, presence: true
   validates :content, presence: true
   
@@ -12,4 +13,13 @@ class Post < ApplicationRecord
   has_many :categories, through: :post_category_ships
   belongs_to :user
 
+  
+  private
+
+  def generate_short_url
+    self.short_url = loop do
+      random_short_url = format('%04d', rand(10_000))
+      break random_short_url unless Post.exists?(short_url: random_short_url)
+    end
+  end
 end

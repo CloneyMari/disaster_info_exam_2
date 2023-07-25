@@ -84,6 +84,16 @@ require 'csv'
     redirect_to posts_path
   end
 
+  def short_url_redirect
+    @post = Post.find_by(short_url: params[:short_url])
+
+    if @post
+      redirect_to post_path(@post)
+    else
+      render plain: 'Post not found.', status: :not_found
+    end
+  end
+
   private
 
   def set_post
