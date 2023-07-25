@@ -11,8 +11,7 @@
      <td>City</td>
      <td>Country</td>
      <td>Action</td>
-
-   </thead>
+ </thead>
    <% @posts.each do |post| %>
      <tr>
        <td><%= post.title %></td>
@@ -28,7 +27,7 @@
     <%= button_to 'Delete', post_path(post), method: :delete,  class:'btn btn-danger' if policy(post).destroy? %>
     <%= link_to 'Comments', post_comments_path(post),  class:'btn btn-info' %>
     <%= link_to 'New Comment', new_post_comment_path(post),  class:'btn btn-success' %>
-    </td>
+   </td>
      </tr>
    <% end %>
  </table>

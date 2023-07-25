@@ -13,5 +13,5 @@ class ApplicationController < ActionController::Base
 
  def pundit_user
      current_user
-   end
+ end
 end
