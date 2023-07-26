@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :posts
   get '/:short_url', to: 'posts#short_url_redirect', as: :short_url_redirect
   root 'posts#index'
+  resources :csv_imports, only: [:new, :create]
 
   resources :posts do
     resources :comments, except: :show
